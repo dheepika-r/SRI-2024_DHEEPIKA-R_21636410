@@ -1,0 +1,98 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ANIMAL CLASSIFICATION</title>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet"> 
+	<style>
+	
+	.bg-dark {
+		background-color: 	#4b6ebb!important;
+	}
+	#result {
+		color: #0a1c4ed1;
+	}
+	body
+{
+    background-image: url('data:image/jpeg;base64,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');
+    background-size: contain;
+
+}
+background-image{
+	opacity: 1.0;
+}
+
+	</style>
+</head>
+
+<body style="opacity: 1.0;text-align: center;">
+    
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+			<a class="navbar-brand" href="#"> <h1> DHEEPIKA'S ANIMALS PREDICTOR</h1></a>
+        </div>
+    </nav>
+    <div class="container">
+        <div id="content" style="margin-top:2em">
+		<div class="container">
+		  <div class="row">
+			<div class="col-sm-6 bd">
+			  <h1 style="color: aliceblue;">Animal prediction website</h1>
+			  <br>
+			 <h2> <p style="color: aliceblue;">
+Welcome to Animal Predictor
+
+Discover the animal in your image! Upload a picture and let our predictor identify if it's a bear, crow, elephant,rat,etc.<br> It's fast, accurate, and fun!
+
+</p></h2>
+			      
+			</div>
+			<div class="col-sm-6">
+				<div>
+					<h2 style="color: aliceblue;">Upload Image Here To Identify the Animal</h2>
+			<form action = "http://localhost:5000/" id="upload-file" method="post" enctype="multipart/form-data">
+				<label for="imageUpload" class="upload-label">
+					<h1 style="color: white;">Choose the image...</h1>
+				</label>
+				<input type="file" name="image" id="imageUpload" accept=".png, .jpg, .jpeg">
+			</form>
+			
+
+			<div class="image-section" style="display:none;">
+				<div class="img-preview">
+					<div id="imagePreview">
+					</div>
+				</div>
+				<div style="color: darkred;">
+					<h1><button type="button" class="btn btn-info btn-lg " id="btn-predict">Predict!</button></h1>
+			
+
+				</div>
+			</div>
+
+			<div class="loader" style="display:none;"></div>
+
+			<h1>
+				<span id="result"> </span>
+			</h1>
+
+		</div>
+			</div>
+			 
+		  </div>
+		</div>
+		</div>
+    </div>
+</body>
+
+<footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}" type="text/javascript"></script>    
+</footer>
+
+</html>
